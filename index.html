@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коллекция сайтов для Лизы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #ff7bac;
+            --secondary: #ff4d94;
+            --light-pink: #ffeef4;
+            --dark-pink: #e83e8c;
+            --text: #5a3a4e;
+            --white: #ffffff;
+            --shadow: rgba(255, 123, 172, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff0f5, #ffd5e5, #ffeef4, #ffdae8);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Анимированный фон */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-elements div {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), transparent);
+            opacity: 0.15;
+            animation: float 15s linear infinite;
+            filter: blur(10px);
+        }
+
+        .floating-elements div:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 20%;
+            animation-duration: 20s;
+        }
+
+        .floating-elements div:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 70%;
+            left: 80%;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        .floating-elements div:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        .floating-elements div:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            left: 75%;
+            animation-duration: 18s;
+            animation-delay: -8s;
+        }
+
+        .floating-elements div:nth-child(5) {
+            width: 180px;
+            height: 180px;
+            top: 80%;
+            left: 10%;
+            animation-duration: 22s;
+            animation-delay: -15s;
+        }
+
+        /* Шапка сайта */
+        header {
+            background: rgba(255, 240, 245, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px var(--shadow);
+            animation: slideDown 0.8s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            animation: pulse 2s infinite, rotate 15s linear infinite;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .logo:hover h1 {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(255, 123, 172, 0.4);
+        }
+
+        /* Бургер меню */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 32px;
+            height: 26px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .burger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--secondary);
+            border-radius: 3px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: absolute;
+            left: 0;
+        }
+
+        .burger-menu span:nth-child(1) {
+            top: 0;
+        }
+
+        .burger-menu span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .burger-menu span:nth-child(3) {
+            bottom: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Герой-секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInScale 1.2s ease;
+        }
+
+        .hero h2 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px var(--shadow);
+            animation: fadeInDown 1s ease, floatTitle 6s ease-in-out infinite;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+            animation: fadeInUp 1.5s ease;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        /* Секция с проектами */
+        .websites-section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.2rem;
+            margin-bottom: 5rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeIn 1s ease;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            animation: expandLine 1.8s ease forwards;
+        }
+
+        .websites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .website-card {
+            background: rgba(255, 255, 255, 0.88);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px var(--shadow);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .website-card.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .website-card:hover {
+            transform: translateY(-20px) rotate(2deg) scale(1.03);
+            box-shadow: 0 25px 50px rgba(255, 123, 172, 0.45);
+        }
+
+        .website-card:hover .card-image {
+            transform: scale(1.08);
+        }
+
+        .website-card:hover .card-image i {
+            animation: pulseIcon 1.5s infinite;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.6s ease;
+        }
+
+        .card-image i {
+            font-size: 7rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: floatIcon 4s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+
+        .website-content {
+            padding: 2.2rem;
+        }
+
+        .website-content h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .website-content h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .website-card:hover .website-content h4::after {
+            width: 100%;
+        }
+
+        .website-content p {
+            margin-bottom: 2rem;
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.5s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.7s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-7px) scale(1.08);
+            box-shadow: 0 15px 30px rgba(255, 123, 172, 0.6);
+        }
+
+        /* Подвал */
+        footer {
+            background: rgba(255, 240, 245, 0.92);
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+            margin-top: 2rem;
+            backdrop-filter: blur(6px);
+            position: relative;
+            overflow: hidden;
+            border-top: 3px solid rgba(255, 123, 172, 0.2);
+        }
+
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            font-size: 2rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            box-shadow: 0 8px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.7s;
+        }
+
+        .social-links a:hover::before {
+            left: 100%;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-10px) rotate(15deg) scale(1.15);
+            box-shadow: 0 12px 30px rgba(255, 123, 172, 0.7);
+        }
+
+        footer p {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-top: 2.5rem;
+            font-weight: 300;
+        }
+
+        .heart {
+            color: var(--secondary);
+            animation: heartbeat 1.2s infinite;
+            display: inline-block;
+        }
+
+        /* Анимации */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(15deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatTitle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulseIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            from { 
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Анимация бургер-меню */
+        .burger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+            top: 50%;
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+            top: 50%;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 300px;
+                background: rgba(255, 240, 245, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+
+            .hero h2 {
+                font-size: 3.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .websites-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2.3rem;
+            }
+            
+            .social-links a {
+                width: 60px;
+                height: 60px;
+                font-size: 1.7rem;
+            }
+            
+            .card-image i {
+                font-size: 5rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="floating-elements">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Шапка сайта -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-heart"></i>
+            <h1>Коллекция для Лизы</h1>
+        </div>
+        
+        <div class="burger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#home">Главная</a>
+            <a href="#projects">Проекты</a>
+            <a href="#gallery">Галерея</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Специальная коллекция сайтов</h2>
+            <p>Эксклюзивная подборка самых красивых и анимированных проектов, созданных с любовью и вниманием к деталям</p>
+            <a href="#projects" class="btn">Смотреть проекты</a>
+        </div>
+        
+        <!-- Анимированные сердечки -->
+        <div class="hearts-container" style="position: absolute; top: 85%; left: 50%; transform: translateX(-50%); width: 300px; height: 50px;">
+            <i class="fas fa-heart" style="font-size: 2.5rem; color: #ff4d94; animation: float 6s ease-in-out infinite; position: absolute; left: 0;"></i>
+            <i class="fas fa-heart" style="font-size: 1.8rem; color: #ff7bac; animation: float 7s ease-in-out infinite 1s; position: absolute; left: 50px;"></i>
+            <i class="fas fa-heart" style="font-size: 2.2rem; color: #e83e8c; animation: float 8s ease-in-out infinite 2s; position: absolute; left: 120px;"></i>
+            <i class="fas fa-heart" style="font-size: 2rem; color: #ff4d94; animation: float 7.5s ease-in-out infinite 3s; position: absolute; left: 200px;"></i>
+        </div>
+    </section>
+
+    <!-- Секция с проектами -->
+    <section id="projects" class="websites-section">
+        <h3 class="section-title">Мои проекты</h3>
+        <div class="websites-grid">
+            <!-- Проект 1 -->
+            <div class="website-card">
+                <div class="card-image">
+                    <i class="fas fa-blog"></i>
+                </div>
+                <div class="website-content">
+                    <h4>Для Лизы))</h4>
+                    <a href="https://rinkameri.github.io/ForLiza/" target="_blank" class="btn">Посетить сайт</a>
+                </div>
+            </div>
+            
+            <!-- Проект 2 -->
+            <div class="website-card">
+                <div class="card-image">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="website-content">
+                    <h4>Опять для Лизы)</h4>
+                    <a href="https://example.com/shop" target="_blank" class="btn">Посетить сайт</a>
+                </div>
+            </div>
+            
+            <!-- Проект 3 -->
+            <div class="website-card">
+                <div class="card-image">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="website-content">
+                    <h4>Ну еще раз)</h4>
+                    <a href="https://example.com/portfolio" target="_blank" class="btn">Посетить сайт</a>
+                </div>
+            </div>
+            
+            <!-- Проект 4 -->
+            <div class="website-card">
+                <div class="card-image">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="website-content">
+                    <h4>Опять)</h4>
+                    <a href="https://example.com/landing" target="_blank" class="btn">Посетить сайт</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p>Создано с <span class="heart">❤️</span> для Лизы | Все права защищены © 2023</p>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Бургер-меню
+            const burgerMenu = document.querySelector('.burger-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            burgerMenu.addEventListener('click', function() {
+                burgerMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Анимация для каждого элемента меню
+                if (navLinks.classList.contains('active')) {
+                    document.querySelectorAll('.nav-links a').forEach((link, index) => {
+                        link.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1 + 0.3}s`;
+                        link.style.opacity = "0";
+                        link.style.transform = "translateY(20px)";
+                    });
+                }
+            });
+            
+            // Закрытие меню при клике на ссылку
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    burgerMenu.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Анимация карточек при появлении
+            const cards = document.querySelectorAll('.website-card');
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Анимация кнопок при наведении
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.transform = 'translateY(-7px) scale(1.08)';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Анимация фона при движении мыши
+            document.addEventListener('mousemove', function(e) {
+                const moveX = (e.clientX / window.innerWidth - 0.5) * 30;
+                const moveY = (e.clientY / window.innerHeight - 0.5) * 30;
+                document.querySelector('.hero-content').style.transform = `translate(${moveX}px, ${moveY}px)`;
+                
+                // Эффект параллакса для фона
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                document.body.style.backgroundPosition = `${x * 100}% ${y * 100}%`;
+            });
+            
+            // Анимация иконок в карточках
+            const cardIcons = document.querySelectorAll('.card-image i');
+            cardIcons.forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    icon.style.transform = 'scale(1.2)';
+                });
+                
+                icon.addEventListener('mouseleave', () => {
+                    icon.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Анимация шапки при скролле
+            let lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100 && currentScroll > lastScroll) {
+                    document.querySelector('header').style.transform = 'translateY(-100%)';
+                } else {
+                    document.querySelector('header').style.transform = 'translateY(0)';
+                }
+                
+                lastScroll = currentScroll;
+            });
+        });
+    </script>
+</body>
+</html>
